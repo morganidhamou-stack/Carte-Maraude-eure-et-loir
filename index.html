@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carte Eure-et-Loir</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; }
+    #map { height: 100%; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([48.4468, 1.5016], 9);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    const points = [
+      { title: "Exemple 1", lat: 48.447, lng: 1.489 },
+      { title: "Exemple 2", lat: 48.732, lng: 1.366 }
+    ];
+
+    points.forEach(p => {
+      L.marker([p.lat, p.lng]).addTo(map).bindPopup(p.title);
+    });
+  </script>
+</body>
+</html>
