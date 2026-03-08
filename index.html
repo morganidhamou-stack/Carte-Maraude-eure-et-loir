@@ -52,21 +52,23 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const map = L.map('map').setView([48.4468,1.5016],10);
+
+const map = L.map('map').setView([48.447,1.489],13);
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ maxZoom:19 }).addTo(map);
 
-// Icône rouge
 const redIcon = new L.Icon({
   iconUrl:'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
   shadowUrl:'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-  iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[1,-34], shadowSize:[41,41]
+  iconSize:[25,41],
+  iconAnchor:[12,41],
+  popupAnchor:[1,-34],
+  shadowSize:[41,41]
 });
 
-// LayerGroup
 const maraudeLayer = L.layerGroup().addTo(map);
 const accueilLayer = L.layerGroup().addTo(map);
 
-// Points bleus
 const points=[
   {title:"Théâtre de Chartres", lat:48.442209, lng:1.48552, info:["Lundi - 19h45 - FAC","Mardi - 19h45 - FAC","Mercredi - 20h00 - Restaurant du cœur","Jeudi - 19h45 - FAC","Vendredi - 19h30 - CRF","Samedi - 19h30 - CRF","Dimanche - 18h00 - Restaurant du cœur"]},
   {title:"Place Drouaise", lat:48.452782, lng:1.487984, info:["Lundi - 20h15 - FAC","Mardi - 20h15 - FAC","Mercredi - 21h00 - Restaurant du Cœur","Jeudi - 20h15 - FAC","Vendredi - 20h30 - CRF","Samedi - 20h30 - CRF","Dimanche - 19h00 - Restaurant du Cœur"]},
@@ -78,7 +80,6 @@ points.forEach(p=>{
   L.marker([p.lat,p.lng]).bindPopup(popup).addTo(maraudeLayer);
 });
 
-// Points rouges
 const refugeInfo=`<b>Le Point refuge</b><br>Lundi : 8h15-12h / 13h30-16h30<br>Mardi : 8h15-12h / 13h30-16h30<br>Mercredi : 8h15-12h<br>Jeudi : 8h15-12h / 13h30-16h30<br>Vendredi : 8h15-12h / 13h30-16h30<br>Samedi : 8h15-12h / 13h30-16h30<br>Dimanche : 8h15-12h / 13h30-16h30`;
 L.marker([48.447393,1.495139], {icon:redIcon}).bindPopup(refugeInfo).addTo(accueilLayer);
 
@@ -97,7 +98,6 @@ L.marker([48.453503,1.49679], {icon:redIcon}).bindPopup(facInfo).addTo(accueilLa
 const caarudInfo=`<b>CAARUD</b><br>Mardi : 9h30 - 12h<br>Jeudi : 10h - 12h / 14h - 17h30`;
 L.marker([48.448769,1.467535], {icon:redIcon}).bindPopup(caarudInfo).addTo(accueilLayer);
 
-// --- Gérer clic sur légende ---
 function showMaraude() {
   if(!map.hasLayer(maraudeLayer)) map.addLayer(maraudeLayer);
   if(map.hasLayer(accueilLayer)) map.removeLayer(accueilLayer);
@@ -113,7 +113,6 @@ function showAll() {
   if(!map.hasLayer(accueilLayer)) map.addLayer(accueilLayer);
 }
 
-// Empêcher propagation des clics sur la légende
 const legendDiv = document.querySelector('.legend');
 L.DomEvent.disableClickPropagation(legendDiv);
 
