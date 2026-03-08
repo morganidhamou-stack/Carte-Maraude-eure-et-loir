@@ -39,6 +39,7 @@
 
   .blue { background: #2A7FFF; }
   .red { background: #D32F2F; }
+  .green { background: #2EAF4A; }
 </style>
 </head>
 <body>
@@ -47,7 +48,13 @@
 <div class="legend">
   <div id="showMaraude"><span class="circle blue"></span>Maraude</div>
   <div id="showAccueil"><span class="circle red"></span>Accueil de jour</div>
-  <div id="showAll"><span class="circle blue"></span><span class="circle red"></span>Tous</div>
+  <div id="showCollecte"><span class="circle green"></span>Point de collecte</div>
+  <div id="showAll">
+    <span class="circle blue"></span>
+    <span class="circle red"></span>
+    <span class="circle green"></span>
+    Tous
+  </div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -66,8 +73,18 @@ const redIcon = new L.Icon({
   shadowSize:[41,41]
 });
 
+const greenIcon = new L.Icon({
+  iconUrl:'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+  shadowUrl:'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize:[25,41],
+  iconAnchor:[12,41],
+  popupAnchor:[1,-34],
+  shadowSize:[41,41]
+});
+
 const maraudeLayer = L.layerGroup().addTo(map);
 const accueilLayer = L.layerGroup().addTo(map);
+const collecteLayer = L.layerGroup().addTo(map);
 
 const points=[
   {title:"Théâtre de Chartres", lat:48.442209, lng:1.48552, info:["Lundi - 19h45 - FAC","Mardi - 19h45 - FAC","Mercredi - 20h00 - Restaurant du cœur","Jeudi - 19h45 - FAC","Vendredi - 19h30 - CRF","Samedi - 19h30 - CRF","Dimanche - 18h00 - Restaurant du cœur"]},
@@ -97,19 +114,38 @@ L.marker([48.453503,1.49679], {icon:redIcon}).bindPopup(facInfo).addTo(accueilLa
 const caarudInfo=`<b>CAARUD</b><br>Mardi : 9h30 - 12h<br>Jeudi : 10h - 12h / 14h - 17h30`;
 L.marker([48.448769,1.467535], {icon:redIcon}).bindPopup(caarudInfo).addTo(accueilLayer);
 
+// Points verts - collecte
+const restosChartresInfo=`<b>Les restos du coeurs - Chartres</b><br>Mardi : 09h - 11h / 14h - 16h<br>Vendredi : 09h - 11h / 14h - 16h`;
+L.marker([48.437031,1.506759], {icon:greenIcon}).bindPopup(restosChartresInfo).addTo(collecteLayer);
+
+const restosLuceInfo=`<b>Les restos du coeurs - Lucé</b><br>Mercredi : 13h15 - 17h<br>Vendredi : 09h - 12h`;
+L.marker([48.439632,1.462659], {icon:greenIcon}).bindPopup(restosLuceInfo).addTo(collecteLayer);
+
+const restosMainvilliersInfo=`<b>Les restos du coeurs - Mainvilliers</b><br>Mardi : 13h30 - 16h<br>Vendredi : 13h30 - 16h`;
+L.marker([48.445972,1.456186], {icon:greenIcon}).bindPopup(restosMainvilliersInfo).addTo(collecteLayer);
+
 function showMaraude() {
   if(!map.hasLayer(maraudeLayer)) map.addLayer(maraudeLayer);
   if(map.hasLayer(accueilLayer)) map.removeLayer(accueilLayer);
+  if(map.hasLayer(collecteLayer)) map.removeLayer(collecteLayer);
 }
 
 function showAccueil() {
   if(!map.hasLayer(accueilLayer)) map.addLayer(accueilLayer);
   if(map.hasLayer(maraudeLayer)) map.removeLayer(maraudeLayer);
+  if(map.hasLayer(collecteLayer)) map.removeLayer(collecteLayer);
+}
+
+function showCollecte() {
+  if(!map.hasLayer(collecteLayer)) map.addLayer(collecteLayer);
+  if(map.hasLayer(maraudeLayer)) map.removeLayer(maraudeLayer);
+  if(map.hasLayer(accueilLayer)) map.removeLayer(accueilLayer);
 }
 
 function showAll() {
   if(!map.hasLayer(maraudeLayer)) map.addLayer(maraudeLayer);
   if(!map.hasLayer(accueilLayer)) map.addLayer(accueilLayer);
+  if(!map.hasLayer(collecteLayer)) map.addLayer(collecteLayer);
 }
 
 const legendDiv = document.querySelector('.legend');
@@ -117,6 +153,7 @@ L.DomEvent.disableClickPropagation(legendDiv);
 
 document.getElementById('showMaraude').addEventListener('click', showMaraude);
 document.getElementById('showAccueil').addEventListener('click', showAccueil);
+document.getElementById('showCollecte').addEventListener('click', showCollecte);
 document.getElementById('showAll').addEventListener('click', showAll);
 
 </script>
