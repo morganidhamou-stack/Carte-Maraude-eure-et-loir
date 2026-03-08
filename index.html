@@ -1,37 +1,114 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Carte Eure-et-Loir</title>
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
-  <style>
-    body, html { margin: 0; padding: 0; height: 100%; }
-    #map { height: 100%; width: 100%; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Carte Eure-et-Loir</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+  body, html { margin:0; padding:0; height:100%; }
+  #map { height:100%; width:100%; }
+
+  .legend {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.25);
+    z-index: 1000;
+  }
+
+  .legend div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 6px;
+  }
+
+  .circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .blue { background: #2A7FFF; }
+  .red { background: #D32F2F; }
+</style>
 </head>
 <body>
-  <div id="map"></div>
+<div id="map"></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
-    const map = L.map('map').setView([48.4468, 1.5016], 9);
+<div class="legend">
+  <div id="showMaraude"><span class="circle blue"></span>Maraude</div>
+  <div id="showAccueil"><span class="circle red"></span>Accueil de jour</div>
+  <div id="showAll"><span class="circle blue"></span><span class="circle red"></span>Tous</div>
+</div>
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-    }).addTo(map);
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map = L.map('map').setView([48.4468,1.5016],10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{ maxZoom:19 }).addTo(map);
 
-    const points = [
-      { title: "Exemple 1", lat: 48.447, lng: 1.489 },
-      { title: "Exemple 2", lat: 48.732, lng: 1.366 }
-    ];
+// Icône rouge
+const redIcon = new L.Icon({
+  iconUrl:'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+  shadowUrl:'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize:[25,41], iconAnchor:[12,41], popupAnchor:[1,-34], shadowSize:[41,41]
+});
 
-    points.forEach(p => {
-      L.marker([p.lat, p.lng]).addTo(map).bindPopup(p.title);
-    });
-  </script>
+// LayerGroup
+const maraudeLayer = L.layerGroup().addTo(map);
+const accueilLayer = L.layerGroup().addTo(map);
+
+// Points bleus
+const points=[
+  {title:"Théâtre de Chartres", lat:48.442209, lng:1.48552, info:["Lundi - 19h45 - FAC","Mardi - 19h45 - FAC","Mercredi - 20h00 - Restaurant du cœur","Jeudi - 19h45 - FAC","Vendredi - 19h30 - CRF","Samedi - 19h30 - CRF","Dimanche - 18h00 - Restaurant du cœur"]},
+  {title:"Place Drouaise", lat:48.452782, lng:1.487984, info:["Lundi - 20h15 - FAC","Mardi - 20h15 - FAC","Mercredi - 21h00 - Restaurant du Cœur","Jeudi - 20h15 - FAC","Vendredi - 20h30 - CRF","Samedi - 20h30 - CRF","Dimanche - 19h00 - Restaurant du Cœur"]},
+  {title:"Place du marché", lat:48.735604, lng:1.364754, info:["Mardi - 20h - GIP Relais Logement","Vendredi - 20h - CRF"]}
+];
+
+points.forEach(p=>{
+  const popup = `<b>${p.title}</b><br>` + p.info.join("<br>");
+  L.marker([p.lat,p.lng]).bindPopup(popup).addTo(maraudeLayer);
+});
+
+// Points rouges
+const refugeInfo=`<b>Le Point refuge</b><br>Lundi : 8h15-12h / 13h30-16h30<br>Mardi : 8h15-12h / 13h30-16h30<br>Mercredi : 8h15-12h<br>Jeudi : 8h15-12h / 13h30-16h30<br>Vendredi : 8h15-12h / 13h30-16h30<br>Samedi : 8h15-12h / 13h30-16h30<br>Dimanche : 8h15-12h / 13h30-16h30`;
+L.marker([48.447393,1.495139], {icon:redIcon}).bindPopup(refugeInfo).addTo(accueilLayer);
+
+const svpInfo=`<b>Saint Vincent de Paul</b><br>Mercredi : 14h - 17h`;
+L.marker([48.43731818272861,1.4831399500939169], {icon:redIcon}).bindPopup(svpInfo).addTo(accueilLayer);
+
+// --- Gérer clic sur légende ---
+function showMaraude() {
+  if(!map.hasLayer(maraudeLayer)) map.addLayer(maraudeLayer);
+  if(map.hasLayer(accueilLayer)) map.removeLayer(accueilLayer);
+}
+
+function showAccueil() {
+  if(!map.hasLayer(accueilLayer)) map.addLayer(accueilLayer);
+  if(map.hasLayer(maraudeLayer)) map.removeLayer(maraudeLayer);
+}
+
+function showAll() {
+  if(!map.hasLayer(maraudeLayer)) map.addLayer(maraudeLayer);
+  if(!map.hasLayer(accueilLayer)) map.addLayer(accueilLayer);
+}
+
+// Empêcher propagation des clics sur la légende
+const legendDiv = document.querySelector('.legend');
+L.DomEvent.disableClickPropagation(legendDiv);
+
+document.getElementById('showMaraude').addEventListener('click', showMaraude);
+document.getElementById('showAccueil').addEventListener('click', showAccueil);
+document.getElementById('showAll').addEventListener('click', showAll);
+
+</script>
 </body>
 </html>
