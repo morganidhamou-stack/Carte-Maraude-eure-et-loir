@@ -124,6 +124,12 @@ L.marker([48.439632,1.462659], {icon:greenIcon}).bindPopup(restosLuceInfo).addTo
 const restosMainvilliersInfo=`<b>Les restos du coeurs - Mainvilliers</b><br>Mardi : 13h30 - 16h<br>Vendredi : 13h30 - 16h`;
 L.marker([48.445972,1.456186], {icon:greenIcon}).bindPopup(restosMainvilliersInfo).addTo(collecteLayer);
 
+const croixRougeInfo=`<b>La Croix rouge Française</b><br>Mardi : 09h - 11h30 / 14h - 16h30<br>Vendredi : 09h - 11h30 / 14h - 16h30<br>Accueil de jour :<br>Mercredi : 14h - 19h<br>Samedi : 14h - 19h`;
+L.marker([48.431656,1.509816], {icon:greenIcon}).bindPopup(croixRougeInfo).addTo(collecteLayer);
+
+const secoursCatholiqueCollecteInfo=`<b>Le Secours Catholique</b><br>Mercredi : 09h - 12h<br>Jeudi : 09h - 12h<br>Vendredi : 09h - 12h`;
+L.marker([48.451776,1.489665], {icon:greenIcon}).bindPopup(secoursCatholiqueCollecteInfo).addTo(collecteLayer);
+
 function showMaraude() {
   if(!map.hasLayer(maraudeLayer)) map.addLayer(maraudeLayer);
   if(map.hasLayer(accueilLayer)) map.removeLayer(accueilLayer);
