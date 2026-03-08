@@ -88,6 +88,15 @@ L.marker([48.43731818272861,1.4831399500939169], {icon:redIcon}).bindPopup(svpIn
 const fatimaInfo=`<b>Notre Dame de fatima - femmes/enfants</b><br>Lundi au samedi : 9h - 17h<br>Téléphone : 06.29.55.19.72`;
 L.marker([48.446414,1.481194], {icon:redIcon}).bindPopup(fatimaInfo).addTo(accueilLayer);
 
+const secoursCatholiqueInfo=`<b>Secours Catholique</b><br>Mercredi : 9h - 12h<br>Jeudi : 9h - 12h<br>Vendredi : 9h - 12h`;
+L.marker([48.451698,1.489667], {icon:redIcon}).bindPopup(secoursCatholiqueInfo).addTo(accueilLayer);
+
+const facInfo=`<b>Foyer d'Accueil Chartrain</b><br>Resto solidaire :<br>Lundi : 12h - 13h<br>Mardi : 12h - 13h<br>Jeudi : 12h - 13h<br><br>Douche :<br>Lundi au vendredi : 9h - 11h30 / 14h - 16h30`;
+L.marker([48.453503,1.49679], {icon:redIcon}).bindPopup(facInfo).addTo(accueilLayer);
+
+const caarudInfo=`<b>CAARUD</b><br>Mardi : 9h30 - 12h<br>Jeudi : 10h - 12h / 14h - 17h30`;
+L.marker([48.448769,1.467535], {icon:redIcon}).bindPopup(caarudInfo).addTo(accueilLayer);
+
 // --- Gérer clic sur légende ---
 function showMaraude() {
   if(!map.hasLayer(maraudeLayer)) map.addLayer(maraudeLayer);
