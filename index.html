@@ -85,6 +85,9 @@ L.marker([48.447393,1.495139], {icon:redIcon}).bindPopup(refugeInfo).addTo(accue
 const svpInfo=`<b>Saint Vincent de Paul</b><br>Mercredi : 14h - 17h`;
 L.marker([48.43731818272861,1.4831399500939169], {icon:redIcon}).bindPopup(svpInfo).addTo(accueilLayer);
 
+const fatimaInfo=`<b>Notre Dame de fatima - femmes/enfants</b><br>Lundi au samedi : 9h - 17h<br>Téléphone : 06.29.55.19.72`;
+L.marker([48.446414,1.481194], {icon:redIcon}).bindPopup(fatimaInfo).addTo(accueilLayer);
+
 // --- Gérer clic sur légende ---
 function showMaraude() {
   if(!map.hasLayer(maraudeLayer)) map.addLayer(maraudeLayer);
