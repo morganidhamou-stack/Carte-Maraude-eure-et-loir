@@ -87,8 +87,34 @@ const accueilLayer = L.layerGroup().addTo(map);
 const collecteLayer = L.layerGroup().addTo(map);
 
 const points=[
-  {title:"Théâtre de Chartres", lat:48.442209, lng:1.48552, info:["Lundi - 19h45 - FAC","Mardi - 19h45 - FAC","Mercredi - 20h00 - Restaurant du cœur","Jeudi - 19h45 - FAC","Vendredi - 19h30 - CRF","Samedi - 19h30 - CRF","Dimanche - 18h00 - Restaurant du cœur"]},
-  {title:"Place Drouaise", lat:48.452782, lng:1.487984, info:["Lundi - 20h15 - FAC","Mardi - 20h15 - FAC","Mercredi - 21h00 - Restaurant du Cœur","Jeudi - 20h15 - FAC","Vendredi - 20h30 - CRF","Samedi - 20h30 - CRF","Dimanche - 19h00 - Restaurant du Cœur"]}
+  {
+    title:"Théâtre de Chartres",
+    lat:48.442209,
+    lng:1.48552,
+    info:[
+      "Lundi - 19h45 - FAC",
+      "Mardi - 19h45 - FAC et Protection civile",
+      "Mercredi - 20h00 - Restos du cœur et la PASS",
+      "Jeudi - 19h45 - FAC",
+      "Vendredi - 19h30 - CRF",
+      "Samedi - 19h30 - CRF",
+      "Dimanche - 18h00 - Restaurant du cœur"
+    ]
+  },
+  {
+    title:"Place Drouaise",
+    lat:48.452782,
+    lng:1.487984,
+    info:[
+      "Lundi - 20h15 - FAC",
+      "Mardi - 20h15 - FAC et Protection civile",
+      "Mercredi - 21h00 - Restos du cœur et la PASS",
+      "Jeudi - 20h15 - FAC",
+      "Vendredi - 20h30 - CRF",
+      "Samedi - 20h30 - CRF",
+      "Dimanche - 19h00 - Restaurant du Cœur"
+    ]
+  }
 ];
 
 points.forEach(p=>{
